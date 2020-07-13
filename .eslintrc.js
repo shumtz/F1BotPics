@@ -11,6 +11,7 @@ module.exports = {
     ecmaVersion: 11,
   },
   rules: {
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "no-unused-vars": "off"
   },
 };

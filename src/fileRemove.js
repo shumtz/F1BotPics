@@ -1,9 +1,6 @@
-const fs = require('fs');
+const { CronJob } = require('cron');
+const fsExtra = require('fs-extra');
 
-fs.unlink('./images/*.png', (err) => {
-  if (err) {
-    throw err;
-  }
-
-  console.log('File Deleted');
+const job = new CronJob('* * 21 * * *', () => {
+  fsExtra.emptyDirSync('./images');
 });

@@ -1,4 +1,3 @@
-require('dotenv').config();
 const { CronJob } = require('cron');
 const puppeteer = require('puppeteer');
 const fs = require('fs');
@@ -8,11 +7,11 @@ const download = require('./download/download.js');
 const userName = process.env.USER_NAME;
 const userPass = process.env.USER_PASS;
 
-const job = new CronJob('* * */2 * * *', () => {
+const job = new CronJob('* * * * * *', () => {
   (async () => {
     const browser = await puppeteer.launch({
-      headless: false,
-      defaultViewport: null,
+      // headless: false,
+      // defaultViewport: null,
       args: ['--no-sandbox'],
     });
     const page = await browser.newPage();
