@@ -1,4 +1,11 @@
 require('dotenv').config();
 
-const server = require('./src/app');
-const fileRemove = require('./src/fileRemove');
+const cron = require('node-cron');
+const bot = require('./src/app');
+
+cron.schedule('*/15 * * * *', () => {
+  bot();
+}, {
+  scheduled: true,
+  timezone: 'America/Sao_Paulo',
+});

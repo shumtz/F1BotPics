@@ -20,6 +20,7 @@
     "cron": "^1.8.2",
     "dotenv": "^8.2.0",
     "fs-extra": "^9.0.1",
+    "node-cron": "^2.0.3",
     "puppeteer": "^4.0.1",
     "request": "^2.88.2"
   }
