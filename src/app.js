@@ -7,7 +7,7 @@ const download = require('./download/download.js');
 const userName = process.env.USER_NAME;
 const userPass = process.env.USER_PASS;
 
-const job = new CronJob('* * * * * *', () => {
+const job = new CronJob('* * */2 * * *', () => {
   (async () => {
     const browser = await puppeteer.launch({
       // headless: false,
