@@ -31,8 +31,8 @@ const bot = async () => {
   await page.click('div.r-vw2c0b');
   await page.waitFor(2000);
 
-  await page.type('#challenge_response', telefone);
-  await page.click('#email_challenge_submit');
+  //  await page.type('#challenge_response', telefone);
+  //  await page.click('#email_challenge_submit');
 
   // Entra no twitter depois de logado
   await page.goto('https://twitter.com/');
@@ -57,8 +57,7 @@ const bot = async () => {
     });
     await download(image, `./src/images/${titlename}.png`);
     await fileChooser.accept([`./src/images/${titlename}.png`]);
-    await page.type('.r-1dqxon3 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)', `#formula1 #f1 
-Link: reddit.com${permalink}`);
+    await page.type('.r-1dqxon3 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)', '#formula1 #f1');
     await page.waitFor(5000);
     await page.click('div.r-urgr8i:nth-child(4)'); // Envia tweet
     await browser.close();
