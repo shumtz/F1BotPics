@@ -6,6 +6,6 @@ const bot = require('./src/app');
 cron.schedule('*/15 * * * *', () => {
   bot();
 }, {
-  scheduled: true,
-  timezone: 'America/Sao_Paulo',
+ scheduled: true,
+ timezone: 'America/Sao_Paulo',
 });

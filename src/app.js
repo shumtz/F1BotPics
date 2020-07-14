@@ -6,6 +6,8 @@ const download = require('./download/download.js');
 const userName = process.env.USER_NAME;
 const userPass = process.env.USER_PASS;
 
+const telefone = '11944757572';
+
 const bot = async () => {
   const browser = await puppeteer.launch({
     // headless: false,
@@ -15,11 +17,9 @@ const bot = async () => {
   const page = await browser.newPage();
 
   // Faz login no twitter
-  await page.goto('https://tweetdeck.twitter.com/');
+  await page.goto('https://twitter.com/login');
 
-  await page.waitFor(2000);
-  await page.click('a.Button');
-  await page.waitFor(2000);
+  await page.waitFor(4000);
   await page.waitForSelector('div.css-1dbjc4n:nth-child(6) > label:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > input:nth-child(1)');
   await page.type('div.css-1dbjc4n:nth-child(6) > label:nth-child(1)', userName); // Digita username
 
@@ -30,6 +30,9 @@ const bot = async () => {
   await page.waitFor(2000);
   await page.click('div.r-vw2c0b');
   await page.waitFor(2000);
+
+  await page.type('#challenge_response', telefone);
+  await page.click('#email_challenge_submit');
 
   // Entra no twitter depois de logado
   await page.goto('https://twitter.com/');
