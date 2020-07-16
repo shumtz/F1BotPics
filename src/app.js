@@ -38,7 +38,8 @@ const bot = async () => {
   await page.goto('https://twitter.com/');
   await page.waitFor(5000);
   await page.click('a.r-urgr8i');
-  await page.waitFor(5000);
+  await page.waitFor(9000);
+  console.log('PASSOU');
 
   const [fileChooser] = await Promise.all([
     page.waitForFileChooser(),
@@ -47,16 +48,19 @@ const bot = async () => {
 
   try {
     const response = await axios.get('https://www.reddit.com/r/F1Porn/new.json?sort=new');
-    const titlename = response.data.data.children[5].data.title;
-    const image = response.data.data.children[5].data.url_overridden_by_dest;
-    const { permalink } = response.data.data.children[5].data;
-    await fs.stat(`./src/images/${titlename}.png`, (err) => {
+    let titlename = response.data.data.children[4].data.title;
+    titlename = titlename.replace(/\s+/g, '');
+    titlename = titlename.slice(0, 5);
+    console.log(titlename);
+    const image = response.data.data.children[4].data.url_overridden_by_dest;
+    const { permalink } = response.data.data.children[4].data;
+    await fs.stat(__dirname + `/images/${titlename}.jpg`, (err) => {
       if (err == null) {
         return browser.close();
       }
     });
-    await download(image, `./src/images/${titlename}.png`);
-    await fileChooser.accept([`./src/images/${titlename}.png`]);
+    await download(image, __dirname + `/images/${titlename}.jpg`);
+    await fileChooser.accept([__dirname + `/images/${titlename}.jpg`]);
     await page.type('.r-1dqxon3 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)', `#formula1 #f1 (Reddit)`);
     await page.waitFor(5000);
     await page.click('div.r-urgr8i:nth-child(4) > div:nth-child(1) > span:nth-child(1) > span:nth-child(1)'); // Envia tweet
