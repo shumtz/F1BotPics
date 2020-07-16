@@ -47,9 +47,9 @@ const bot = async () => {
 
   try {
     const response = await axios.get('https://www.reddit.com/r/F1Porn/new.json?sort=new');
-    const titlename = response.data.data.children[0].data.title;
-    const image = response.data.data.children[0].data.url_overridden_by_dest;
-    const { permalink } = response.data.data.children[0].data;
+    const titlename = response.data.data.children[5].data.title;
+    const image = response.data.data.children[5].data.url_overridden_by_dest;
+    const { permalink } = response.data.data.children[5].data;
     await fs.stat(`./src/images/${titlename}.png`, (err) => {
       if (err == null) {
         return browser.close();
@@ -57,9 +57,10 @@ const bot = async () => {
     });
     await download(image, `./src/images/${titlename}.png`);
     await fileChooser.accept([`./src/images/${titlename}.png`]);
-    await page.type('.r-1dqxon3 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)', '#formula1 #f1');
+    await page.type('.r-1dqxon3 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)', `#formula1 #f1 (Reddit)`);
     await page.waitFor(5000);
-    await page.click('div.r-urgr8i:nth-child(4)'); // Envia tweet
+    await page.click('div.r-urgr8i:nth-child(4) > div:nth-child(1) > span:nth-child(1) > span:nth-child(1)'); // Envia tweet
+    await page.waitFor(20000);
     await browser.close();
   } catch (e) {
     return e;
