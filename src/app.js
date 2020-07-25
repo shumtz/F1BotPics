@@ -10,8 +10,8 @@ const phone = process.env.PHONE;
 
 const bot = async () => {
   const browser = await puppeteer.launch({
-    headless: false,
-    defaultViewport: null,
+    // headless: false,
+    // defaultViewport: null,
     args: ['--no-sandbox'],
   });
   const page = await browser.newPage();
