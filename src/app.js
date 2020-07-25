@@ -1,3 +1,4 @@
+const process = require('process');
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const axios = require('axios');
@@ -5,20 +6,20 @@ const download = require('./download/download.js');
 
 const userName = process.env.USER_NAME;
 const userPass = process.env.USER_PASS;
-
-const telefone = '11944757572';
+const phone = process.env.PHONE;
 
 const bot = async () => {
   const browser = await puppeteer.launch({
-    // headless: false,
-    // defaultViewport: null,
+    headless: false,
+    defaultViewport: null,
     args: ['--no-sandbox'],
   });
   const page = await browser.newPage();
 
-  // Faz login no twitter
+  // Entry in twitter.com
   await page.goto('https://twitter.com/login');
 
+  // Type credencias login
   await page.waitFor(4000);
   await page.waitForSelector('div.css-1dbjc4n:nth-child(6) > label:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > input:nth-child(1)');
   await page.type('div.css-1dbjc4n:nth-child(6) > label:nth-child(1)', userName); // Digita username
@@ -26,21 +27,24 @@ const bot = async () => {
   await page.waitFor(2000);
   await page.keyboard.press('Tab');
 
-  await page.keyboard.type(userPass); // Digita a senha
+  // Type Password
+  await page.keyboard.type(userPass);
   await page.waitFor(2000);
   await page.click('div.r-vw2c0b');
   await page.waitFor(2000);
 
-  //  await page.type('#challenge_response', telefone);
+  // Validation for acess another local (phone)
+
+  //  await page.type('#challenge_response', phone);
   //  await page.click('#email_challenge_submit');
 
   // Entra no twitter depois de logado
   await page.goto('https://twitter.com/');
   await page.waitFor(5000);
   await page.click('a.r-urgr8i');
-  await page.waitFor(10000);
-  console.log('PASSOU');
 
+
+  // Select file
   const [fileChooser] = await Promise.all([
     page.waitForFileChooser(),
     page.click('.r-1dqxon3 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)'), // some button that triggers file selection
@@ -48,12 +52,9 @@ const bot = async () => {
 
   try {
     const response = await axios.get('https://www.reddit.com/r/F1Porn/new.json?sort=new');
-    let titlename = response.data.data.children[0].data.title;
+
     titlename = titlename.replace(/\s+/g, '');
-    titlename = titlename.slice(0, 37;
-    console.log(titlename);
-    const image = response.data.data.children[0].data.url_overridden_by_dest;
-    const { permalink } = response.data.data.children[0].data;
+
     await fs.stat(__dirname + `/images/${titlename}.jpg`, (err) => {
       if (err == null) {
         return browser.close();
@@ -68,8 +69,8 @@ const bot = async () => {
     await page.waitFor(10000);
     await browser.close();
   } catch (e) {
-    return e;
+    process.exit(1);
   }
 };
 
-module.exports = bot;
+module.exports = bot();
