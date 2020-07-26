@@ -52,8 +52,10 @@ const bot = async () => {
 
   try {
     const response = await axios.get('https://www.reddit.com/r/F1Porn/new.json?sort=new');
-
-    titlename = titlename.replace(/\s+/g, '');
+    let titlename = response.data.data.children[0].data.title;
+    titlename = titlename.slice(0, 37);
+    const image = response.data.data.children[0].data.url_overridden_by_dest;
+    const { permalink } = response.data.data.children[0].data;
 
     await fs.stat(__dirname + `/images/${titlename}.jpg`, (err) => {
       if (err == null) {
@@ -65,7 +67,6 @@ const bot = async () => {
     await page.type('.r-1dqxon3 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)', `#formula1 #f1 (Reddit)`);
     await page.waitFor(5000);
     await page.click('div.r-urgr8i:nth-child(4) > div:nth-child(1) > span:nth-child(1) > span:nth-child(1)'); // Envia tweet
-    console.log('POSTADO')
     await page.waitFor(10000);
     await browser.close();
   } catch (e) {
