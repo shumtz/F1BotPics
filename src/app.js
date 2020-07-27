@@ -42,7 +42,7 @@ const bot = async () => {
   await page.goto('https://twitter.com/');
   await page.waitFor(5000);
   await page.click('a.r-urgr8i');
-
+  await page.waitFor(5000)
 
   // Select file
   const [fileChooser] = await Promise.all([
@@ -55,7 +55,6 @@ const bot = async () => {
     let titlename = response.data.data.children[0].data.title;
     titlename = titlename.slice(0, 37);
     const image = response.data.data.children[0].data.url_overridden_by_dest;
-    const { permalink } = response.data.data.children[0].data;
 
     await fs.stat(__dirname + `/images/${titlename}.jpg`, (err) => {
       if (err == null) {
@@ -70,7 +69,7 @@ const bot = async () => {
     await page.waitFor(10000);
     await browser.close();
   } catch (e) {
-    process.exit(1);
+    return process.exit(1);
   }
 };
 
